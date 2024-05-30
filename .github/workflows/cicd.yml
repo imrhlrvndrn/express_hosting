@@ -1,0 +1,27 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches:
+      - feat/azure_deployment
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Installing PNPM
+        run: npm i -g pnpm
+      - name: Installing Dependencies
+        run: pnpm install
+      - name: Deploying to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: express-hosting
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
