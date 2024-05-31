@@ -1,0 +1,8 @@
+services:
+  express_server:
+    container_name: express_server
+    image: express_image
+    restart:
+      always
+    ports:
+      - 8000:8000
